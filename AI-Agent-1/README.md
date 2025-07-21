@@ -1,0 +1,1 @@
+Replacement repository for the boot.dev ai agent project after the project used a new environment style and a long gap for me personally.

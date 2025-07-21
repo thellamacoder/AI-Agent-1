@@ -1,2 +1,2 @@
 # AI-Agent-1
-Replacement repository for the boot.dev ai agent project after the project used a new environment style and a long gap for me personally.
+Messed up the folder structure in this project because I started with the Github repository then followed the setup instructions on boot.dev which created a folder hierarchy inside the existing repository folder.
