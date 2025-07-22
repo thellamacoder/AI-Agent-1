@@ -13,9 +13,11 @@ def main():
 
     response = client.models.generate_content(model = "gemini-2.0-flash-001",
     contents = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum.")
-
+    prompt_tokens = response.usage_metadata.prompt_token_count
+    response_tokens = response.usage_metadata.candidates_token_count
 
     print(response.text)
+    print(f"Prompt tokens: {prompt_tokens}\nResponse tokens: {response_tokens}")
 
 if __name__ == "__main__":
     main()
