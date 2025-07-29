@@ -1,5 +1,5 @@
 import os
-from config import MAX_CHARS
+from functions.config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
     abs_working_directory = os.path.abspath(working_directory)
@@ -13,5 +13,3 @@ def get_file_content(working_directory, file_path):
     
     with open(file_path, "r") as f:
         file_content_string = f.read(MAX_CHARS)
-
-    print(target_file)
