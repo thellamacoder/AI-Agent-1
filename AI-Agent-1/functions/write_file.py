@@ -12,8 +12,8 @@ def write_file(working_directory, file_path, content):
     # if the file_path does not exist, create it
 
     try:
-        if not os.path.exists(abs_file_path):
-            os.makedirs(abs_file_path)
+        if not os.path.exists(os.path.dirname(abs_file_path)):
+            os.makedirs(os.path.dirname(abs_file_path))
     
     except Exception as e:
         return f"Error: Cannot create path '{abs_file_path}': {e}"
