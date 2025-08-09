@@ -4,7 +4,7 @@ import subprocess
 def run_python_file(working_directory, file_path, args=[]):
     
     abs_working_dir = os.path.abspath(working_directory)
-    abs_file_path = os.path.abspath(os.path.join(working_directory, file_path))
+    abs_file_path = os.path.abspath(os.path.join(abs_working_dir, file_path))
 
     if not abs_file_path.startswith(abs_working_dir):
         return f"Error: Cannot execute '{file_path}' as it is outside the permitted working directory"
@@ -30,6 +30,10 @@ def run_python_file(working_directory, file_path, args=[]):
     - Pass along the args if provided
     """
 
-    run_file_result = subprocess.run(executable=abs_file_path, timeout=30, capture_output=True, args=args)
+    command_list = ["python"]
+    path_list = command_list + [abs_file_path]
+    args_list = path_list + args
+
+    run_file_result = subprocess.run(args_list, timeout=30, capture_output=True)
 
     print(f"STDOUT: {run_file_result.stdout}, STDERR: {run_file_result.stderr}")
