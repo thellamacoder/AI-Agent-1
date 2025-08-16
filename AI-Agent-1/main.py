@@ -5,6 +5,7 @@ from google import genai
 from google.genai import types
 from functions import get_files_info
 from prompts import system_prompt
+from schemas import *
 
 
 def main():
