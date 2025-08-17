@@ -6,6 +6,7 @@ from google.genai import types
 from functions import get_files_info
 from prompts import system_prompt
 from schemas import *
+from call_function import available_functions
 
 
 def main():
@@ -43,12 +44,6 @@ def main():
     generate_content(client, messages, verbose)
 
 def generate_content(client, messages, verbose):
-
-    available_functions = types.Tool(
-    function_declarations=[
-        schema_get_files_info,
-    ]
-    )
     
     response = client.models.generate_content(model = "gemini-2.0-flash-001",
         contents = messages, config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt))
