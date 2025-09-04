@@ -53,6 +53,10 @@ def generate_content(client, messages, verbose):
             system_instruction=system_prompt,
         ),
     )
+    # response.candidates is available here. Need to capture the AI's response.candidates.content and append it to the conversation history
+    for candidate in response.candidates:
+        messages.append(candidate.content)
+
     if verbose:
         print("Prompt tokens:", response.usage_metadata.prompt_token_count)
         print("Response tokens:", response.usage_metadata.candidates_token_count)
@@ -61,6 +65,7 @@ def generate_content(client, messages, verbose):
         return f"{response.text}"
 
     function_responses = []
+    
     for function_call_part in response.function_calls:
         function_call_result = call_function(function_call_part, verbose)
         if (
@@ -71,6 +76,10 @@ def generate_content(client, messages, verbose):
         if verbose:
             print(f"-> {function_call_result.parts[0].function_response.response}")
         function_responses.append(function_call_result.parts[0])
+
+    messages.append(types.Content(
+        role="user",
+        parts=function_responses,))
 
     if not function_responses:
         raise Exception("no function responses generated, exiting.")
