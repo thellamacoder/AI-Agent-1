@@ -62,9 +62,18 @@ def generate_content(client, messages, verbose):
             if verbose:
                 print("Prompt tokens:", response.usage_metadata.prompt_token_count)
                 print("Response tokens:", response.usage_metadata.candidates_token_count)
+                print(f"Iteration {iteration + 1}")
+                print(f"Has function calls: {bool(response.function_calls)}")
+                if response.text:
+                    print(f"Response text: {response.text[:100]}...")
 
             if not response.function_calls:
-                return f"{response.text}"
+                if response.text:
+                    print("Final response:")
+                    print(response.text)
+                    return response.text
+                else:
+                    return "No final response generated"
 
             function_responses = []
 
@@ -85,8 +94,10 @@ def generate_content(client, messages, verbose):
 
             if not function_responses:
                 raise Exception("no function responses generated, exiting.")
+            
         except Exception as e:
             return f"Error: {e}"
+        
     # If we reach here, we hit max iterations
     return "Agent reached maximum iterations without completing the task."
 if __name__ == "__main__":
